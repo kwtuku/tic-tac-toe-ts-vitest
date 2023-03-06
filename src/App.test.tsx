@@ -1,4 +1,13 @@
-import { calculateWinner } from './App';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+
+import { Square, calculateWinner } from './App';
+
+test('<Square />', () => {
+  render(<Square value={'X'} onSquareClick={() => vi.fn()} />);
+
+  expect(screen.getByRole('button')).toHaveTextContent('X');
+});
 
 test('calculateWinner() で勝者を判定する', () => {
   const winnerNull = calculateWinner([

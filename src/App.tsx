@@ -7,7 +7,7 @@ type SquareProps = {
   onSquareClick: () => void;
 };
 
-function Square({ value, onSquareClick }: SquareProps) {
+export function Square({ value, onSquareClick }: SquareProps) {
   return (
     <button className="square" onClick={onSquareClick}>
       {value}
