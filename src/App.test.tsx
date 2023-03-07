@@ -1,12 +1,24 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { Square, calculateWinner } from './App';
+import { Square, Board, calculateWinner } from './App';
 
 test('<Square />', () => {
   render(<Square value={'X'} onSquareClick={() => vi.fn()} />);
 
   expect(screen.getByRole('button')).toHaveTextContent('X');
+});
+
+test('<Board />', async () => {
+  const spy = vi.fn();
+  render(<Board xIsNext={true} squares={[]} onPlay={spy} />);
+
+  await userEvent.click(screen.getAllByRole('button')[0]);
+
+  expect(spy).toHaveBeenCalled();
+
+  spy.mockRestore();
 });
 
 test('calculateWinner() で勝者を判定する', () => {

@@ -21,7 +21,7 @@ type BoardProps = {
   onPlay: (nextSquares: Player[]) => void;
 };
 
-function Board({ xIsNext, squares, onPlay }: BoardProps) {
+export function Board({ xIsNext, squares, onPlay }: BoardProps) {
   function handleClick(i: number) {
     if (calculateWinner(squares) || squares[i]) {
       return;
