@@ -45,7 +45,7 @@ export function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   return (
     <>
-      <div className="status">{status}</div>
+      <div className="status" data-testid="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -90,7 +90,7 @@ export default function Game() {
     }
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button data-testid={`step-#${move}`} onClick={() => jumpTo(move)}>{description}</button>
       </li>
     );
   });

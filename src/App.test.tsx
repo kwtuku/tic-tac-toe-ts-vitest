@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Square, Board, calculateWinner } from './App';
+import Game, { Square, Board, calculateWinner } from './App';
 
 test('<Square />', () => {
   render(<Square value={'X'} onSquareClick={() => vi.fn()} />);
@@ -19,6 +19,82 @@ test('<Board />', async () => {
   expect(spy).toHaveBeenCalled();
 
   spy.mockRestore();
+});
+
+test('<Game />', async () => {
+  render(<Game />);
+
+  // | X |   |   |
+  // |   |   |   |
+  // |   |   |   |
+  const button0 = screen.getAllByRole('button')[0];
+  await userEvent.click(button0);
+  expect(button0).toHaveTextContent('X');
+
+  // | X |   |   |
+  // | O |   |   |
+  // |   |   |   |
+  const button3 = screen.getAllByRole('button')[3];
+  await userEvent.click(button3);
+  expect(button3).toHaveTextContent('O');
+
+  // | X | X |   |
+  // | O |   |   |
+  // |   |   |   |
+  const button1 = screen.getAllByRole('button')[1];
+  await userEvent.click(button1);
+  expect(button1).toHaveTextContent('X');
+
+  // | X | X |   |
+  // | O | O |   |
+  // |   |   |   |
+  const button4 = screen.getAllByRole('button')[4];
+  await userEvent.click(button4);
+  expect(button4).toHaveTextContent('O');
+
+  // | X | X |   |
+  // | O | O |   |
+  // | X |   |   |
+  const button6 = screen.getAllByRole('button')[6];
+  await userEvent.click(button6);
+  expect(button6).toHaveTextContent('X');
+
+  // | X | X |   |
+  // | O | O |   |
+  // | X | O |   |
+  const button7 = screen.getAllByRole('button')[7];
+  await userEvent.click(button7);
+  expect(button7).toHaveTextContent('O');
+
+  // | X | X | X |
+  // | O | O |   |
+  // | X | O |   |
+  const button2 = screen.getAllByRole('button')[2];
+  await userEvent.click(button2);
+  expect(button2).toHaveTextContent('X');
+
+  expect(screen.getByTestId('status')).toHaveTextContent('Winner: X');
+
+  // | X | X | X |
+  // | O | O |   |
+  // | X | O |   |
+  const button5 = screen.getAllByRole('button')[5];
+  await userEvent.click(button5);
+  expect(button5).toHaveTextContent('');
+
+  // |   |   |   |
+  // |   |   |   |
+  // |   |   |   |
+  await userEvent.click(screen.getByTestId('step-#0'));
+
+  // |   |   |   |
+  // |   |   |   |
+  // |   |   | X |
+  const button8 = screen.getAllByRole('button')[8];
+  await userEvent.click(button8);
+  expect(button8).toHaveTextContent('X');
+
+  expect(screen.queryByText(/move #2/)).toBeNull();
 });
 
 test('calculateWinner() で勝者を判定する', () => {
