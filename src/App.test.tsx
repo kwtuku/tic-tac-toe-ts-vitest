@@ -97,36 +97,44 @@ test('<Game />', async () => {
   expect(screen.queryByText(/move #2/)).toBeNull()
 })
 
-test('calculateWinner() で勝者を判定する', () => {
-  // prettier-ignore
-  const winnerNull = calculateWinner([
-    null, null, null,
-    null, null, null,
-    null, null, null,
-  ])
-  expect(winnerNull).toBe(null)
+describe('calculateWinner() で勝者を判定する', () => {
+  test('ゲームが始まっていないとき、勝者はいない', () => {
+    // prettier-ignore
+    const winnerNull = calculateWinner([
+      null, null, null,
+      null, null, null,
+      null, null, null,
+    ])
+    expect(winnerNull).toBe(null)
+  })
 
-  // prettier-ignore
-  const draw = calculateWinner([
-    'O', 'X', 'O',
-    'X', 'X', 'O',
-    'X', 'O', 'X'
-  ])
-  expect(draw).toBe(null)
+  test('引き分けのとき、勝者はいない', () => {
+    // prettier-ignore
+    const draw = calculateWinner([
+      'O', 'X', 'O',
+      'X', 'X', 'O',
+      'X', 'O', 'X',
+    ])
+    expect(draw).toBe(null)
+  })
 
-  // prettier-ignore
-  const winnerX = calculateWinner([
-    'X', 'O', null,
-    'X', 'O', null,
-    'X', null, null,
-  ])
-  expect(winnerX).toBe('X')
+  test('勝者が X と判定できる', () => {
+    // prettier-ignore
+    const winnerX = calculateWinner([
+      'X', 'O', null,
+      'X', 'O', null,
+      'X', null, null,
+    ])
+    expect(winnerX).toBe('X')
+  })
 
-  // prettier-ignore
-  const winnerO = calculateWinner([
+  test('勝者が O と判定できる', () => {
+    // prettier-ignore
+    const winnerO = calculateWinner([
     'X', 'O', null,
     null, 'O', 'X',
     'X', 'O', null,
-  ])
-  expect(winnerO).toBe('O')
+    ])
+    expect(winnerO).toBe('O')
+  })
 })
