@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type Player = 'X' | 'O' | null
+export type Player = 'X' | 'O' | null
 
 type SquareProps = {
   value: Player

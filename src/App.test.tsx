@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Game, { Square, Board, calculateWinner } from './App'
+import Game, { Square, Board, Player, calculateWinner } from './App'
 
 test('<Square />', () => {
   render(<Square value={'X'} onSquareClick={() => vi.fn()} />)
@@ -100,41 +100,41 @@ test('<Game />', async () => {
 describe('calculateWinner() で勝者を判定する', () => {
   test('ゲームが始まっていないとき、勝者はいない', () => {
     // prettier-ignore
-    const winnerNull = calculateWinner([
+    const squares: Player[] = [
       null, null, null,
       null, null, null,
       null, null, null,
-    ])
-    expect(winnerNull).toBe(null)
+    ]
+    expect(calculateWinner(squares)).toBe(null)
   })
 
   test('引き分けのとき、勝者はいない', () => {
     // prettier-ignore
-    const draw = calculateWinner([
+    const squares: Player[] = [
       'O', 'X', 'O',
       'X', 'X', 'O',
       'X', 'O', 'X',
-    ])
-    expect(draw).toBe(null)
+    ]
+    expect(calculateWinner(squares)).toBe(null)
   })
 
   test('勝者が X と判定できる', () => {
     // prettier-ignore
-    const winnerX = calculateWinner([
+    const squares: Player[] = [
       'X', 'O', null,
       'X', 'O', null,
       'X', null, null,
-    ])
-    expect(winnerX).toBe('X')
+    ]
+    expect(calculateWinner(squares)).toBe('X')
   })
 
   test('勝者が O と判定できる', () => {
     // prettier-ignore
-    const winnerO = calculateWinner([
+    const squares: Player[] = [
     'X', 'O', null,
     null, 'O', 'X',
     'X', 'O', null,
-    ])
-    expect(winnerO).toBe('O')
+    ]
+    expect(calculateWinner(squares)).toBe('O')
   })
 })
